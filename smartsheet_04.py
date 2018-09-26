@@ -49,7 +49,9 @@ def evaluate_row_and_build_updates(source_row):
 print("Starting ...")
 
 # Initialize client
-ss = smartsheet.Smartsheet(access_token)
+proxies = {'http': 'http://proxy.esl.cisco.com:80/', 'https':'http://proxy.esl.cisco.com:80'}
+ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
+#ss = smartsheet.Smartsheet(access_token)
 # Make sure we don't miss any error
 ss.errors_as_exceptions(True)
 

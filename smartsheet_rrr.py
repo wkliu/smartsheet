@@ -3,7 +3,7 @@ import smartsheet
 import logging
 import os.path
 from myconfig import *
-
+import re
 # TODO: Set your API access token here, or leave as None and set as environment variable "SMARTSHEET_ACCESS_TOKEN"
 
 _dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,7 +21,8 @@ def get_cell_by_column_name(row, column_name):
 print("Starting ...")
 
 # Initialize client
-ss = smartsheet.Smartsheet(access_token)
+proxies = {'http': 'http://proxy.esl.cisco.com:80/', 'https':'http://proxy.esl.cisco.com:80/'}
+ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
 # Make sure we don't miss any error
 ss.errors_as_exceptions(True)
 
@@ -43,7 +44,7 @@ columnToAdd = []
 for column in destination_sheet.columns:
     column_r_map[column.title] = column.id
 
-print('Column R Map: ' + str(column_r_map))    
+#print('Column R Map: ' + str(column_r_map))    
 # Load source sheets using Loop
 rowsToAddRRR = []
 rowsToAddHotIssues = []
@@ -51,6 +52,7 @@ rowsToAddOthers = []
 source_sheetIds = ["6986082806982532", "2587280381634436", "8904432097224580", "3099560458381188",
 "831680287139716", "4676809888425860", "400534290098052", "2395220181575556", "7602507250722692"]
 #source_sheetIds = ["7319980007024516"]
+row_num = 0 
 for source_sheetId in source_sheetIds:
     source_sheet = ss.Sheets.get_sheet(source_sheetId)
     column_map = {}
@@ -61,11 +63,12 @@ for source_sheetId in source_sheetIds:
 
     for row in source_sheet.rows:
         dtype = ''
-        print(row.row_number)
+        #print(row.row_number)
         if row.cells[0].display_value == None:
             continue
         rowObject = ss.models.Row()
         rowObject.to_bottom = True    
+        #row_num = row_num + 1
         #print(get_cell_by_column_name(row, "Deal ID"))
         for cell in row.cells:
             if (cell.display_value != None):
@@ -75,10 +78,14 @@ for source_sheetId in source_sheetIds:
                     dtype = cell.value
                     print('type:' + cell.value)
                 if cell.column_id == column_r_map['HTTP Link']: 
-                    print('Cell value:' + cell.value + ' column_id:' + str(cell.column_id))
+                    if dtype == "RRR":
+                       row_num = row_num + 1
+                    formula = ''
                     cell.value = ''   
+                    formula = re.findall(r'(.*Type)\d*(.*\[Engagement ID\])\d*', str(cell.formula))
+                    cell.formula = str(formula[0][0]) + str(row_num) + str(formula[0][1]) + str(row_num)
                 rowObject.cells.append(cell) 
-        print("Row: " + str(rowObject))        
+        #print("Row: " + str(rowObject))        
         if dtype == 'RRR':      
             rowsToAddRRR.append(rowObject)
         elif dtype == 'Hot Issues':
@@ -99,14 +106,14 @@ for source_sheetId in source_sheetIds:
 #print("Win Case Rows:" + str(rowsToAddWin))
 #print("Loss Case Rows:" + str(rowsToAddLoss))
 #print("column_id:" + str(column_r_map['Architectural Plays']))
-print('HTTP: ' + str(column_r_map['HTTP Link']))
+#print('HTTP: ' + str(column_r_map['HTTP Link']))
 newline = ss.models.Row()
-newline.to_bottom = True
+#newline.to_bottom = True
 #print('Length of Top5: ' + str(len(rowsToAddTop5)))
 #print('Length of Win Case: ' + str(len(rowsToAddWin)))
 #print('Length of Loss Case: ' + str(len(rowsToAddLoss)))
-destination_sheet.add_rows(rowsToAddRRR)
-destination_sheet.add_rows(newline)
+print(destination_sheet.add_rows(rowsToAddRRR))
+print(destination_sheet.add_rows(newline))
 destination_sheet.add_rows(rowsToAddHotIssues)
 destination_sheet.add_rows(newline)  
 destination_sheet.add_rows(rowsToAddOthers)        
