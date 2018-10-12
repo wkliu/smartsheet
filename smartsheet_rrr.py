@@ -25,7 +25,7 @@ proxies = {'http': 'http://proxy.esl.cisco.com:80/', 'https':'http://proxy.esl.c
 ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
 # Make sure we don't miss any error
 ss.errors_as_exceptions(True)
-
+formula_string = "=IF(OR(Type1 = \"RRR\", Type29 = \"CAP\"), \"https://clpsvs.cloudapps.cisco.com/services/clip/main/transaction/\" + [Engagement ID]29}]"
 # Log all calls
 logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
@@ -34,7 +34,7 @@ logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
 # Load destination sheet
 
-destination_sheetId = "1914561801545604"
+destination_sheetId = destination_sheetIds["RRR"] 
 destination_sheet = ss.Sheets.get_sheet(destination_sheetId)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
@@ -49,9 +49,11 @@ for column in destination_sheet.columns:
 rowsToAddRRR = []
 rowsToAddHotIssues = []
 rowsToAddOthers = []
-source_sheetIds = ["6986082806982532", "2587280381634436", "8904432097224580", "3099560458381188",
-"831680287139716", "4676809888425860", "400534290098052", "2395220181575556", "7602507250722692"]
-#source_sheetIds = ["7319980007024516"]
+source_sheetIds = [allentseng["RRR"], andrewyang["RRR"], angelalin["RRR"],
+                   barryhuang["RRR"], davidtai["RRR"], jerrylin["RRR"],
+                   jimcheng["RRR"], karlhsieh["RRR"], rickywang["RRR"],
+                   stanhuang["RRR"], tonyhsieh["RRR"], vanhsieh["RRR"],
+                   vinceliu["RRR"], vincenthsu["RRR"], willyhuang["RRR"]]
 row_num = 0 
 for source_sheetId in source_sheetIds:
     source_sheet = ss.Sheets.get_sheet(source_sheetId)
@@ -80,12 +82,13 @@ for source_sheetId in source_sheetIds:
                 if cell.column_id == column_r_map['HTTP Link']: 
                     if dtype == "RRR":
                        row_num = row_num + 1
+                       print(cell)
                     formula = ''
                     cell.value = ''   
                     formula = re.findall(r'(.*Type)\d*(.*\[Engagement ID\])\d*', str(cell.formula))
                     cell.formula = str(formula[0][0]) + str(row_num) + str(formula[0][1]) + str(row_num)
                 rowObject.cells.append(cell) 
-        #print("Row: " + str(rowObject))        
+        print("Row: " + str(rowObject))        
         if dtype == 'RRR':      
             rowsToAddRRR.append(rowObject)
         elif dtype == 'Hot Issues':
@@ -102,18 +105,8 @@ for source_sheetId in source_sheetIds:
     #    result = ss.Sheets.update_rows(result.data.id, rowsToUpdate)
     #else:
     #   print("No updates required")
-#print("Top5 Rows:" + str(rowsToAddTop5))
-#print("Win Case Rows:" + str(rowsToAddWin))
-#print("Loss Case Rows:" + str(rowsToAddLoss))
-#print("column_id:" + str(column_r_map['Architectural Plays']))
-#print('HTTP: ' + str(column_r_map['HTTP Link']))
 newline = ss.models.Row()
 #newline.to_bottom = True
-#print('Length of Top5: ' + str(len(rowsToAddTop5)))
-#print('Length of Win Case: ' + str(len(rowsToAddWin)))
-#print('Length of Loss Case: ' + str(len(rowsToAddLoss)))
-print(destination_sheet.add_rows(rowsToAddRRR))
-print(destination_sheet.add_rows(newline))
 destination_sheet.add_rows(rowsToAddHotIssues)
 destination_sheet.add_rows(newline)  
 destination_sheet.add_rows(rowsToAddOthers)        

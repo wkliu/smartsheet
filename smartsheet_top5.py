@@ -18,10 +18,6 @@ def get_cell_by_column_name(row, column_name):
     column_id = column_map[column_name]
     return row.get_column(column_id)
 
-
-
-
-
 print("Starting ...")
 
 # Initialize client
@@ -34,13 +30,10 @@ ss.errors_as_exceptions(True)
 # Log all calls
 logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
-# Import the sheet
-#result = ss.Sheets.import_xlsx_sheet(_dir + '/Sample Sheet.xlsx', header_row_index=0)
-
 # Load destination sheet
 
-destination_sheetId = "243029249419140"
-destination_sheet = ss.Sheets.get_sheet(destination_sheetId)
+destination_sheetId_all = destination_sheetIds["TOP5_ALL"] 
+destination_sheet_all = ss.Sheets.get_sheet(destination_sheetId_all)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
 
@@ -54,8 +47,11 @@ print('Column R Map: ' + str(column_r_map))
 rowsToAddWin = []
 rowsToAddLoss = []
 rowsToAddTop5 = []
-source_sheetIds = ["7319980007024516", "5153658632464260", "6693249789257604", "6639975014918020","6645197695149956",
-"7684798824114052", "3866916495353732", "2706759929358212"]
+source_sheetIds_SP = [davidtai["Top5"], andrewyang["Top5"], stanhuang["Top5"]]
+source_sheetIds_RMT = [jimcheng["Top5"], karlhsieh["Top5"], vincenthsu["Top5"]]
+source_sheetIds_FSI = [barryhuang["Top5"], angelalin["Top5"], vanhsieh["Top5"]]
+source_sheetIds_PS = [rickywang["Top5"], tonyhsieh["Top5"], willyhuang["Top5"]]
+source_sheetIds_COM = [jerrylin["Top5"], allentseng["Top5"], vinceliu["Top5"]]
 #source_sheetIds = ["7319980007024516"]
 for source_sheetId in source_sheetIds:
     source_sheet = ss.Sheets.get_sheet(source_sheetId)

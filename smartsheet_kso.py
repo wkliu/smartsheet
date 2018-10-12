@@ -35,7 +35,7 @@ logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
 # Load destination sheet
 
-destination_sheetId = "5726972341970820"
+destination_sheetId = destination_sheetIds["KSO"] 
 destination_sheet = ss.Sheets.get_sheet(destination_sheetId)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
@@ -50,8 +50,8 @@ rowsToAddFY19Q1 = []
 rowsToAddFY19Q2 = []
 rowsToAddFY19Q3 = []
 rowsToAddFY19Q4 = []
-source_sheetIds = {"Vince Liu":"872010030049156","Angela Lin":"5208684679718788","Jim Cheng":"5138126956980100", "Allen Tseng":"2216638662633348"}
-#source_sheetIds = ["7319980007024516"]
+source_sheetIds = {"Vince Liu": vinceliu["KSO"],"Angela Lin": angelalin["KSO"],"Jim Cheng": jimcheng["KSO"], "Karl Hsieh":karlhsieh["KSO"], "Allen Tseng": allentseng["KSO"], "Andrew Yang":andrewyang["KSO"], "Barry Huang":barryhuang["KSO"], "David Tai": davidtai["KSO"], "Jerry Lin": jerrylin["KSO"], "Ricky Wang": rickywang["KSO"], "Stan Huang": stanhuang["KSO"], "Tony Hsieh": tonyhsieh["KSO"], "Van Hsieh": vanhsieh["KSO"],"Vincent Hsu": vincenthsu["KSO"], "Willy Huang": willyhuang["KSO"]}
+
 for owner in source_sheetIds:
     source_sheetId = source_sheetIds[owner]
     source_sheet = ss.Sheets.get_sheet(source_sheetId)
