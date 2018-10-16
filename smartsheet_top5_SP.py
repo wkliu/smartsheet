@@ -32,7 +32,7 @@ logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
 # Load destination sheet
 
-destination_sheetId_all = destination_sheetIds["TOP5_ALL"] 
+destination_sheetId_all = destination_sheetIds["TOP5_SP"] 
 destination_sheet = ss.Sheets.get_sheet(destination_sheetId_all)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
@@ -47,7 +47,7 @@ for column in destination_sheet.columns:
 rowsToAddWin = []
 rowsToAddLoss = []
 rowsToAddTop5 = []
-source_sheetIds = [davidtai["Top5"], andrewyang["Top5"], stanhuang["Top5"], jimcheng["Top5"], karlhsieh["Top5"], vincenthsu["Top5"], barryhuang["Top5"], angelalin["Top5"], vanhsieh["Top5"], rickywang["Top5"], tonyhsieh["Top5"], willyhuang["Top5"], jerrylin["Top5"], allentseng["Top5"], vinceliu["Top5"]]
+source_sheetIds = [davidtai["Top5"], andrewyang["Top5"], stanhuang["Top5"]]
 #source_sheetIds = ["7319980007024516"]
 for source_sheetId in source_sheetIds:
     source_sheet = ss.Sheets.get_sheet(source_sheetId)
