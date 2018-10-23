@@ -4,7 +4,7 @@ proxies = {'http': 'http://proxy.esl.cisco.com:80/', 'https':'http://proxy.esl.c
 #ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
 ss = smartsheet.Smartsheet(access_token)
 SEs=[davidtai, andrewyang, stanhuang, jimcheng, karlhsieh, vincenthsu, angelalin, barryhuang, vanhsieh, rickywang, tonyhsieh, willyhuang, jerrylin, allentseng, vinceliu]
-Share_Sheets = [destination_sheetIds["db"]]
+Share_Sheets = [destination_sheetIds["POST_SALE"]]
 for se in SEs:
     for item in Share_Sheets:
         #print(se[item], se["email"])
