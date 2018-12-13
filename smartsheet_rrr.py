@@ -55,7 +55,7 @@ source_sheetIds = [allentseng["RRR"], andrewyang["RRR"], angelalin["RRR"],
                    barryhuang["RRR"], davidtai["RRR"], jerrylin["RRR"],
                    jimcheng["RRR"], karlhsieh["RRR"], rickywang["RRR"],
                    stanhuang["RRR"], tonyhsieh["RRR"], vanhsieh["RRR"],
-                   vinceliu["RRR"], vincenthsu["RRR"], willyhuang["RRR"],"6139935058093956"]
+                   vinceliu["RRR"], vincenthsu["RRR"], willyhuang["RRR"]]
 RRR_row_num = 0
 CAP_row_num = 0
 for source_sheetId in source_sheetIds:
@@ -141,8 +141,8 @@ while len(final_rows)> num :
                     print(dtype)
                     if dtype == 'RRR' or dtype == 'CAP':
                        cell.value = ''   
-                    formula = re.findall(r'(.*Type)\d*(.*Type)\d*(.*\[Engagement ID\])\d*', str(cell.formula))
-                    cell.formula = str(formula[0][0]) + str(num+1) + str(formula[0][1]) + str(num+1) + str(formula[0][2]) + str(num+1)
+                       formula = re.findall(r'(.*Type)\d*(.*Type)\d*(.*\[Engagement ID\])\d*', str(cell.formula))
+                       cell.formula = str(formula[0][0]) + str(num+1) + str(formula[0][1]) + str(num+1) + str(formula[0][2]) + str(num+1)
                
     
     print(final_rows[num])
