@@ -22,8 +22,8 @@ print("Starting ...")
 
 # Initialize client
 proxies = {'http': 'http://proxy.esl.cisco.com:80/', 'https':'http://proxy.esl.cisco.com:80'}
-ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
-#ss = smartsheet.Smartsheet(access_token)
+#ss = smartsheet.Smartsheet(access_token=access_token, proxies=proxies)
+ss = smartsheet.Smartsheet(access_token)
 # Make sure we don't miss any error
 ss.errors_as_exceptions(True)
 
@@ -33,7 +33,7 @@ logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 # Load destination sheet
 
 destination_sheetId_all = destination_sheetIds["TOP5_ALL"] 
-destination_sheet_all = ss.Sheets.get_sheet(destination_sheetId_all)
+destination_sheet = ss.Sheets.get_sheet(destination_sheetId_all)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
 
@@ -42,7 +42,7 @@ columnToAdd = []
 for column in destination_sheet.columns:
     column_r_map[column.title] = column.id
 
-print('Column R Map: ' + str(column_r_map))    
+#print('Column R Map: ' + str(column_r_map))    
 # Load source sheets using Loop
 rowsToAddWin = []
 rowsToAddLoss = []
@@ -62,10 +62,10 @@ for source_sheetId in source_sheetIds:
     # Accumulate rows needing update here
 
     for row in source_sheet.rows:
-        print(row.row_number)
+        #print(row.row_number)
         if row.cells[0].display_value in datatype:
             dtype = row.cells[0].display_value
-            print(dtype)
+            #print(dtype)
             continue
         elif row.cells[0].display_value == None:
             continue
@@ -77,7 +77,7 @@ for source_sheetId in source_sheetIds:
                 #print("Cell value:" + str(column_map[cell.column_id]) + ":" + repr(cell.display_value))
                 cell.column_id = column_r_map[column_map[cell.column_id]]
                 rowObject.cells.append(cell) 
-        print("Row: " + str(rowObject))        
+        #print("Row: " + str(rowObject))        
         if dtype == 'Top5':      
             rowsToAddTop5.append(rowObject)
         elif dtype == 'Win Case':
