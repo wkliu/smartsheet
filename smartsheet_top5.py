@@ -50,7 +50,7 @@ rowsToAddTop5 = []
 source_sheetIds_SP = [davidtai["Top5"], andrewyang["Top5"], stanhuang["Top5"]]
 source_sheetIds_RMT = [jimcheng["Top5"], karlhsieh["Top5"], vincenthsu["Top5"]]
 source_sheetIds_FSI = [barryhuang["Top5"], angelalin["Top5"], vanhsieh["Top5"]]
-source_sheetIds_PS = [rickywang["Top5"], tonyhsieh["Top5"], willyhuang["Top5"]]
+source_sheetIds_PS = [rickywang["Top5"], willyhuang["Top5"]]
 source_sheetIds_COM = [jerrylin["Top5"], allentseng["Top5"], vinceliu["Top5"]]
 #source_sheetIds = ["7319980007024516"]
 for source_sheetId in source_sheetIds:

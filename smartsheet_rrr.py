@@ -52,7 +52,7 @@ rowsToAddOthers = []
 source_sheetIds = [allentseng["RRR"], andrewyang["RRR"], angelalin["RRR"],
                    barryhuang["RRR"], davidtai["RRR"], jerrylin["RRR"],
                    jimcheng["RRR"], karlhsieh["RRR"], rickywang["RRR"],
-                   stanhuang["RRR"], tonyhsieh["RRR"], vanhsieh["RRR"],
+                   stanhuang["RRR"], vanhsieh["RRR"],
                    vinceliu["RRR"], vincenthsu["RRR"], willyhuang["RRR"]]
 row_num = 0 
 for source_sheetId in source_sheetIds:
