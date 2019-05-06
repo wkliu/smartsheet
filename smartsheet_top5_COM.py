@@ -32,7 +32,7 @@ logging.basicConfig(filename='rwsheet.log', level=logging.INFO)
 
 # Load destination sheet
 
-destination_sheetId_all = destination_sheetIds["TOP5_Comm"] 
+destination_sheetId_all = destination_sheetIds["TOP5_COM"] 
 destination_sheet = ss.Sheets.get_sheet(destination_sheetId_all)
 
 #print ("Loaded " + str(len(sheet.rows)) + " rows from sheet: " + sheet.name)
